@@ -3,7 +3,6 @@ set nomSrcTxt=java_files_list.txt
 set web=C:\Users\rohyr\Documents\study\S6\avion\web\views\jsp
 set webapps=C:\tomcat\webapps
 set lib=C:\Users\rohyr\Documents\study\S6\avion\lib
-@REM set src=C:\Users\rohyr\Documents\java\MVC\src\
 set temp=C:\Users\rohyr\Documents\study\S6\avion\temp
 set webxml=C:\Users\rohyr\Documents\study\S6\avion\webxml
 rmdir /s /q %temp%

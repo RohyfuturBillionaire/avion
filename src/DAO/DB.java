@@ -27,7 +27,7 @@ public  class DB {
     
     public void inserer(Connection conn) throws SQLException {
         try {
-            
+            conn.setAutoCommit(false);
             String tableName = getTableName();
             Field[] fields = this.getClass().getDeclaredFields();
     

@@ -17,8 +17,9 @@ public class Dbconn {
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
 
         try {
+            Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

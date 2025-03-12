@@ -10,7 +10,7 @@
 
     <h1>inscription</h1>
     <div class="container">
-        <form action="inscription" method="POST" role="form">
+        <form action="inscriptionPost" method="POST" role="form">
             <legend>inscription form</legend>
         
             <div class="form-group">

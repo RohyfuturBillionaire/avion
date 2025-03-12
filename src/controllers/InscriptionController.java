@@ -7,6 +7,7 @@ import model.Utilisateur;
 import outils.Controller;
 import outils.Get;
 import outils.ModelView;
+import outils.ObjectParam;
 import outils.Url;
 import outils.Post;
 
@@ -24,16 +25,20 @@ public class InscriptionController {
     @Get
     @Url(path ="/inscription")
     public ModelView inscription() {
+        
         ModelView mv = new ModelView();
         mv.setUrl("inscription.jsp");
         return mv;
     }
 
     @Post
-    @Url(path ="/inscription")
-    public ModelView inscriptionPost( Utilisateur user) {
-       Connection conn=Dbconn.getConnection();
+    @Url(path ="/inscriptionPost")
+    public ModelView inscriptionPost( @ObjectParam(name = "user") Utilisateur user) {
+        System.out.println("user name="+user.getNomUtilisateur());
+        System.out.println("user info"+user.getIdUtilisateur());
+    
         try {
+            Connection conn=Dbconn.getConnection();
             user.inserer(conn);
             conn.close();
         } catch (Exception e) {
