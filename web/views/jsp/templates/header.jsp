@@ -6,12 +6,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="${ctx}/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <title>Etat financier</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <title>air jordan service</title>
     <style>
-        body {
-                font-size: 14px; /* Adjust this value to make the text smaller */
-            }
+        body 
+        {
+          font-size: 14px; /* Adjust this value to make the text smaller */
+        }
         .sidebar {
             height: 100vh;
             position: fixed;
@@ -39,12 +40,8 @@
 </head>
 <body>
     <div class="sidebar">
-        <h1 class="text-center">Etat financier</h1>   
-        <a href="/etat">insertion valeur compte</a>
-
-        <a href="/posteInsertion">insertion poste</a>
-        <a href="/posteFInsertion">insertion post fille</a>
-        <a href="/bilan">bilan</a>
+        <h1 class="text-center">air jordan</h1>   
+        <a href="/list">liste des vole</a>
         <%-- <a href="${ctx}/bloc/update">Update Bloc Source</a> --%>
     </div>
     <% if (request.getAttribute("message") != null) { %>

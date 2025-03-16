@@ -4,6 +4,8 @@ set web=C:\Users\rohyr\Documents\study\S6\avion\web\views\jsp
 set webapps=C:\tomcat\webapps
 set lib=C:\Users\rohyr\Documents\study\S6\avion\lib
 set temp=C:\Users\rohyr\Documents\study\S6\avion\temp
+set bootsrap=C:\Users\rohyr\Documents\study\S6\avion\web\views\jsp\bootstrap-5.3.2-dist
+set template=C:\Users\rohyr\Documents\study\S6\avion\web\views\jsp\templates
 set webxml=C:\Users\rohyr\Documents\study\S6\avion\webxml
 rmdir /s /q %temp%
 mkdir %temp%
@@ -19,8 +21,10 @@ mkdir %temp%\WEB-INF\classes
 @REM mkdir %webapps%\%nomAppli%\WEB-INF
 @REM mkdir %webapps%\%nomAppli%\WEB-INF\lib
 @REM mkdir %webapps%\%nomAppli%\WEB-INF\classes
-@REM robocopy %web% %temp%\WEB-INF\views\jsp /E
+robocopy %web% %temp%\WEB-INF\views\jsp /E
 robocopy %web% %temp%
+robocopy %bootsrap% %temp%\assets\bootstrap /E
+robocopy %template% %temp% /E
 robocopy %lib% %temp%\WEB-INF\lib /E
 robocopy %webxml% %temp%\WEB-INF /E
 

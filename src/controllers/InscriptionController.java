@@ -35,7 +35,7 @@ public class InscriptionController {
     @Url(path ="/inscriptionPost")
     public ModelView inscriptionPost( @ObjectParam(name = "user") Utilisateur user) {
         System.out.println("user name="+user.getNomUtilisateur());
-        System.out.println("user info"+user.getIdUtilisateur());
+        System.out.println("user info"+user.getId());
     
         try {
             Connection conn=Dbconn.getConnection();
@@ -49,4 +49,5 @@ public class InscriptionController {
         mv.setUrl("inscription.jsp");
         return mv;
     }
+
 }

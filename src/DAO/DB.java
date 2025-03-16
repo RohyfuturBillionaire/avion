@@ -15,6 +15,35 @@ import annotations.PrimaryKey;
 
 public  class DB {
     
+    public String makeWhere()
+        {
+            Field[] fields = this.getClass().getDeclaredFields();
+            StringBuilder where = new StringBuilder();
+            where.append("1=1 ");
+            for (Field field : fields) {
+                where.append("AND ");
+                if (field.isAnnotationPresent(PrimaryKey.class)) {
+                    if (field.isAnnotationPresent(Column.class)) {
+                        where.append(field.getAnnotation(Column.class).name()).append(" = ? ");
+                    } else {
+                        where.append(field.getName()).append(" = ? ");
+                    }
+                    break;
+                }
+                else if (field.isAnnotationPresent(Column.class)) {
+                    where.append(field.getAnnotation(Column.class).name()).append(" = ? ");
+                } 
+                else if (field.isAnnotationPresent(BaseObject.class)) {
+                    try {
+                        where.append(field.getAnnotation(BaseObject.class).idBaseName()).append(" = ? ");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return where.toString();
+        }
+
     public String getTableName() {
         Class<?> clazz = this.getClass();
         if (clazz.isAnnotationPresent(annotations.Table.class)) {

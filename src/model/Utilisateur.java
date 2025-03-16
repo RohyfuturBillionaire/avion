@@ -16,14 +16,14 @@ import annotations.Table;
 public class Utilisateur extends DB {
     @PrimaryKey
     @Column(name = "id_utilisateur")
-    int idUtilisateur;
+    int id;
     @Column(name = "nom_utilisateur")
     String nomUtilisateur;
     @Column(name = "pwd_utilisateur")
     String pwdUtilisateur;
 
-    public void setIdUtilisateur(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
+    public void setId(int idUtilisateur) {
+        this.id = idUtilisateur;
     }
 
     public void setNomUtilisateur(String nomUtilisateur) {
@@ -34,8 +34,8 @@ public class Utilisateur extends DB {
         this.pwdUtilisateur = pwdUtilisateur;
     }
 
-    public int getIdUtilisateur() {
-        return idUtilisateur;
+    public int getId() {
+        return id;
     }
 
     public String getNomUtilisateur() {
