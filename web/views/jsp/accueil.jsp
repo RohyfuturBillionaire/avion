@@ -3,7 +3,7 @@
 <%
     List<Object> avions = (List<Object>) request.getAttribute("Lavions");
     List<Object> villes = (List<Object>) request.getAttribute("Lvilles");
-
+    List<Object> vols = (List<Object>) request.getAttribute("Lvols");
 %>
 
 <div class="page-header">
@@ -64,7 +64,7 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>numero du vole</th>
+        <th>numero du vol</th>
         <th>avion</th>
         <th>date depart</th>
         <th>date arrive</th>
@@ -75,49 +75,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>
-            air bus
-        </td>
-        <td>
-            2022-10-10 10:00
-        </td>
-        <td>
-            2022-10-10 12:00
-        </td>
-        <td>
-            paris
-        </td>
-        <td>
-            londre
-        </td>
-        <td>
-            <a href="#">reserver</a>
-        </td>
-      </tr>
 
-      <tr>
-        <td>1</td>
-        <td>
-            air bus
-        </td>
-        <td>
-            2022-10-10 10:00
-        </td>
-        <td>
-            2022-10-10 12:00
-        </td>
-        <td>
-            paris
-        </td>
-        <td>
-            londre
-        </td>
-        <td>
-            <a href="#">reserver</a>
-        </td>
-      </tr>
+        <% for (Object vol : vols) { %>
+            <tr>
+                <td><%= ((Vol)vol).getId() %></td>
+                <td><%= ((Vol)vol).getAvion().getModelAvion() %></td>
+                <td><%= ((Vol)vol).getDtDebut() %></td>
+                <td><%= ((Vol)vol).getDtFin() %></td>
+                <td><%= ((Vol)vol).getVilleArrivee().getNomVille() %></td>
+                <td><%= ((Vol)vol).getVilleDepart().getNomVille() %></td>
+                <td><a href="#">reserver</a></td>
+            </tr>
+        <% } %>
+        
+
+
+      
       
       <!-- Add more rows as needed -->
     </tbody>
