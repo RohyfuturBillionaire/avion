@@ -10,6 +10,7 @@ import outils.ModelView;
 import outils.ObjectParam;
 import outils.Url;
 import outils.Post;
+import outils.ErrorUrl;
 
 @Controller
 public class InscriptionController {
@@ -24,8 +25,7 @@ public class InscriptionController {
 
     @Get
     @Url(path ="/inscription")
-    public ModelView inscription() {
-        
+    public ModelView inscription() { 
         ModelView mv = new ModelView();
         mv.setUrl("inscription.jsp");
         return mv;
@@ -33,6 +33,7 @@ public class InscriptionController {
 
     @Post
     @Url(path ="/inscriptionPost")
+    @ErrorUrl(url="/inscription")
     public ModelView inscriptionPost( @ObjectParam(name = "user") Utilisateur user) {
         System.out.println("user name="+user.getNomUtilisateur());
         System.out.println("user info"+user.getId());

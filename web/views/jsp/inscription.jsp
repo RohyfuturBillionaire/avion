@@ -1,3 +1,22 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="outils.*" %>
+<% 
+    if(request.getAttribute("errors")!=null)
+        {  ValueController con=(ValueController)request.getAttribute("errors");
+            out.println("<div class='alert alert-danger'>");
+                HashMap<String,ErrorMessage> errors=con.getErrorsMessage();
+                for(String errorKey:errors.keySet()){
+                    
+                    out.println(errors.get(errorKey).getMessage());
+                }
+          
+            out.println("</div>");
+        }
+
+    
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

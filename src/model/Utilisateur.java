@@ -4,6 +4,7 @@ import DAO.DB;
 import annotations.Column;
 import annotations.PrimaryKey;
 import annotations.Table;
+import outils.ValidationAnnotation.NotEmpty;
 
 // CREATE TABLE utilisateur(
 //    id_utilisateur SERIAL,
@@ -18,8 +19,10 @@ public class Utilisateur extends DB {
     @Column(name = "id_utilisateur")
     int id;
     @Column(name = "nom_utilisateur")
+    @NotEmpty
     String nomUtilisateur;
     @Column(name = "pwd_utilisateur")
+    @NotEmpty
     String pwdUtilisateur;
 
     public void setId(int idUtilisateur) {
