@@ -1,11 +1,13 @@
 package DAO;
-import java.lang.annotation.Annotation;
+// import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,104 @@ import annotations.Column;
 import annotations.PrimaryKey;
 
 public  class DB {
+    public boolean checkIfDateorString(Field field)
+        {
+            if (field.getType()==LocalDate.class) {
+                return true;
+
+            }
+            else if(field.getType()==java.sql.Date.class){
+                return true;
+            }
+            else if(field.getType()==Timestamp.class)
+            {
+                return true;
+            }
+            else if (field.getType()==String.class) {
+                return true;
+            }
+            return false;
+        }
+    public List<Object> rechercheMultiCritaire(Connection conn,String... critaires) throws Exception
+        {
+                return recherche(this.makeAfterWhere(critaires),conn);
+        }
+    public String makeAfterWhere(String... critaires)
+        {    StringBuilder where = new StringBuilder();
+            Field [] field=this.getClass().getDeclaredFields();
+            int i=1;
+            for (String critarie : critaires) {
+                    field[i].setAccessible(true);
+                    if(!critarie.isEmpty() && critarie !=null) {
+                        if (field[i].isAnnotationPresent(Column.class)) {
+                            if (checkIfDateorString(field[i])) {
+                                where.append(field[i].getAnnotation(Column.class).name()+"=").append("'"+critarie+"'").append(" and ");    
+                            }
+                        }
+                        
+                        else if (field[i].isAnnotationPresent(BaseObject.class)) {
+                            where.append(field[i].getAnnotation(BaseObject.class).idBaseName()+"=").append(critarie).append(" and ");                                
+                        }
+                        
+                        else {
+                            where.append(field[i].getName()+"=").append(critarie).append(" and ");    
+                        }
+                     }
+                    i++;
+            }
+            System.out.println("criteria = "+where.substring(0, where.length() - 1));
+            return  where.substring(0, where.length() - 4);
+        }
+
+    public List<Object> recherche(String afterWhere,Connection conn) throws Exception {
+        List<Object> results = new ArrayList<>();
+        try {
+            String tableName = getTableName();
+            String query = String.format("SELECT * FROM %s where 1=1 AND %s", tableName,afterWhere);
+    
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
+    
+                while (rs.next()) {
+                    DB obj = this.getClass().getDeclaredConstructor().newInstance();
+                    Field[] fields = this.getClass().getDeclaredFields();
+    
+                    for (Field field : fields) {
+                        field.setAccessible(true);
+                        Object value;
+                        if (field.isAnnotationPresent(Column.class)) {
+                            value = rs.getObject(field.getAnnotation(Column.class).name());
+                        } else if (field.isAnnotationPresent(BaseObject.class)) {
+                            value = ((DB) field.getType().getDeclaredConstructor().newInstance()).getById(conn, rs.getInt(field.getAnnotation(BaseObject.class).idBaseName()));
+                        } else {
+                            value = rs.getObject(field.getName());
+                        }
+    
+                        // condition si le type est BigDecimal
+                        if (value != null) {
+                            if (field.getType() == double.class && value instanceof BigDecimal) {
+                                value = ((BigDecimal) value).doubleValue();
+                            } else if (field.getType() == int.class && value instanceof Integer) {
+                                value = ((Integer) value).intValue();
+                            } else if (field.getType() == short.class && value instanceof Integer) {
+                                value = ((Integer) value).shortValue();
+                            }
+                        }
+    
+                        field.set(obj, value);
+                    }
+    
+                    results.add(obj);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Erreur lors de la récupération des données.", e);
+        }
+        return results;
+
+    } 
+
     
     public String makeWhere()
         {
@@ -67,15 +167,19 @@ public  class DB {
             for (Field field : fields) {
                 if (!field.isAnnotationPresent(PrimaryKey.class)) {
                     if (field.isAnnotationPresent(Column.class)) {
+                        
                         colonne.append(field.getAnnotation(Column.class).name()).append(",");
                         placeholders.append("?,"); 
+                    
                     }else if (field.isAnnotationPresent(BaseObject.class)) {
+                        
                         colonne.append(field.getAnnotation(BaseObject.class).idBaseName()).append(",");
                         placeholders.append("?,");
                     }
                     else{
+                        
                         colonne.append(field.getName()).append(",");
-                    placeholders.append("?,");
+                        placeholders.append("?,");
                     }
                 }
                 index++;
@@ -170,8 +274,8 @@ public  class DB {
             // Recherche du champ correspondant à l'ID
             String primaryKeyField = null;
             for (Field field : fields) {
-                if (field.getName().toLowerCase().contains("id")) {
-                    primaryKeyField = field.getName();
+                if (field.isAnnotationPresent(PrimaryKey.class)) {
+                    primaryKeyField = field.getAnnotation(Column.class).name();
                     break;
                 }
             }
@@ -203,24 +307,50 @@ public  class DB {
     
             // Construction de la clause SET
             StringBuilder setClause = new StringBuilder();
-            for (int i = 1; i < fields.length; i++) { // Commencer à 1 pour ignorer l'ID (1ère colonne)
-                setClause.append(fields[i].getName()).append(" = ?, ");
+            String primaryKeyField="";
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(PrimaryKey.class)) {
+                    primaryKeyField = field.getAnnotation(Column.class).name();
+                
+                }
+                if (!field.isAnnotationPresent(PrimaryKey.class)) {
+                    if (field.isAnnotationPresent(Column.class)) {
+                        setClause.append(field.getAnnotation(Column.class).name()).append(" = ?, ");
+                    
+                    }else if (field.isAnnotationPresent(BaseObject.class)) {
+                        setClause.append(field.getAnnotation(BaseObject.class).idBaseName()).append(" = ?, ");
+                    }
+                    else{
+                        
+                        setClause.append(field.getName()).append("= ?,");
+                        
+                    }
+                }
             }
+            
+
     
             // Supprimer la dernière virgule et espace
             String setClauseStr = setClause.substring(0, setClause.length() - 2);
     
-            String query = String.format("UPDATE %s SET %s WHERE %s = ?", tableName, setClauseStr, fields[0].getName());
+            String query = String.format("UPDATE %s SET %s WHERE %s = ?", tableName, setClauseStr, primaryKeyField);
     
             try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                 int parameterIndex = 1;
-    
-                // Ajout des valeurs pour les colonnes sauf l'ID
-                for (int i = 1; i < fields.length; i++) { // Commencer à 1 pour ignorer l'ID
-                    fields[i].setAccessible(true);
-                    pstmt.setObject(parameterIndex++, fields[i].get(this));
+                
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    if (!field.isAnnotationPresent(PrimaryKey.class)) {    
+                        if (field.isAnnotationPresent(BaseObject.class)) {
+                           System.out.println(field.getType());
+                           pstmt.setObject(parameterIndex++, field.getType().getDeclaredMethod("getId").invoke(field.get(this)));
+                       }  else {
+                           pstmt.setObject(parameterIndex++, field.get(this));
+                       }
+                      
+                   }
                 }
-    
+              
                 // Ajout de l'ID comme dernier paramètre
                 pstmt.setInt(parameterIndex, id);
     

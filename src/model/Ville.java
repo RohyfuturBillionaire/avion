@@ -3,7 +3,9 @@ package model;
 import DAO.DB;
 import annotations.Column;
 import annotations.PrimaryKey;
+import annotations.Table;
 
+@Table(tableName = "ville")
 public class Ville extends DB {
 
     @PrimaryKey

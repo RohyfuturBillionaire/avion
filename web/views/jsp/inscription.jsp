@@ -6,11 +6,13 @@
     if(request.getAttribute("errors")!=null)
         {  ValueController con=(ValueController)request.getAttribute("errors");
             out.println("<div class='alert alert-danger'>");
+                
                 HashMap<String,ErrorMessage> errors=con.getErrorsMessage();
                 for(String errorKey:errors.keySet()){
                     
                     out.println(errors.get(errorKey).getMessage());
-                }
+                
+                 }
           
             out.println("</div>");
         }
@@ -23,13 +25,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
-    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 
     <h1>inscription</h1>
     <div class="container">
-        <form action="inscriptionPost" method="POST" role="form">
+        <form class="form-inline" action="inscriptionPost" method="POST" role="form">
             <legend>inscription form</legend>
         
             <div class="form-group">

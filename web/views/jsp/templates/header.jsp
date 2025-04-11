@@ -43,7 +43,7 @@
     <div class="sidebar">
         <h1 class="text-center">air jordan</h1>   
         <a href="list">liste des vole</a>
-        <%-- <a href="${ctx}/bloc/update">Update Bloc Source</a> --%>
+        <a href="insertionVol">insertion vole</a>
     </div>
     <% if (request.getAttribute("message") != null) { %>
     <script>
