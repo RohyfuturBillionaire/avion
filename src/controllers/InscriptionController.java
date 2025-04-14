@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import connect.Dbconn;
 import model.Utilisateur;
+import outils.Auth;
 import outils.Controller;
 import outils.Get;
 import outils.ModelView;

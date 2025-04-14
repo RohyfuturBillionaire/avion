@@ -11,6 +11,7 @@ import model.Avion;
 import model.ParamVol;
 import model.Ville;
 import model.Vol;
+import outils.Auth;
 import outils.Controller;
 import outils.ErrorUrl;
 import outils.Get;
@@ -53,6 +54,7 @@ public class VolController {
     @Post
     @Url(path = "/insertvol")
     @ErrorUrl(url = "/insertionVol")
+    @Auth(role = "admin")
     public ModelView insertionVole(int avion,String dtDebut,String dtFin,int villeDepart,int villeArrive,double resaheurelimit,double resacanheurelimit,double promotion) throws Exception {   
             ModelView view= new ModelView();
             view.setUrl("insertionVole.jsp");

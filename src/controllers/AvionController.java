@@ -8,6 +8,7 @@ import connect.Dbconn;
 import model.Avion;
 import model.Ville;
 import model.Vol;
+import outils.Auth;
 import outils.Controller;
 import outils.ErrorUrl;
 import outils.Get;
@@ -16,6 +17,7 @@ import outils.Post;
 import outils.Url;
 
 @Controller
+@Auth(role = "user")
 public class AvionController {
     
     
