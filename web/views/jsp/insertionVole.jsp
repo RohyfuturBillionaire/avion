@@ -46,6 +46,24 @@
         </div>
 
         
+        <div class="form-group">
+             <label for="resaheurelimit">heure de reservation limite</label>
+            <input type="number" class="form-control" id="resaheurelimit" name="resaheurelimit">
+        </div>
+
+        
+        <div class="form-group">
+            <label for="resacanheurelimit">heure d'annulation limite</label>
+            <input type="number" class="form-control" id="resacanheurelimit" name="resacanheurelimit">
+        </div>
+
+        
+        <div class="form-group">
+            <label for="promotion">promotion</label>
+            <input type="number" class="form-control" id="promotion" name="promotion">
+        </div>
+        
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
         

@@ -154,8 +154,10 @@ public  class DB {
         return this.getClass().getSimpleName();
     }
     
-    public void inserer(Connection conn) throws SQLException {
+    public Object inserer(Connection conn) throws SQLException {
+        Object obj=null;
         try {
+           
             conn.setAutoCommit(false);
             String tableName = getTableName();
             Field[] fields = this.getClass().getDeclaredFields();
@@ -206,15 +208,19 @@ public  class DB {
                     }
                     index++;
                 }
-    
+
                 pstmt.executeUpdate();
                 conn.commit();
+                List<Object>ob= selectAll(conn);
+                return ob.get(ob.size()-1);
             }
         } catch (Exception e) {
             e.printStackTrace();
             conn.rollback();
             System.out.println("Erreur lors de l'insertion.");
         }
+    
+        return obj;
     }
     
    public List<Object> selectAll(Connection conn) throws SQLException {

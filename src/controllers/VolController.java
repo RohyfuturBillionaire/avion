@@ -8,6 +8,7 @@ import javax.sound.midi.MidiEvent;
 
 import connect.Dbconn;
 import model.Avion;
+import model.ParamVol;
 import model.Ville;
 import model.Vol;
 import outils.Controller;
@@ -57,21 +58,17 @@ public class VolController {
             view.setUrl("insertionVole.jsp");
             
             Vol vol =new Vol();
+            ParamVol paramvol= new ParamVol();
             vol.setAvion(avion);
             vol.setDtDebut(dtDebut);
             vol.setDtFin(dtFin);
             vol.setVilleDepart(villeDepart);
             vol.setVilleArrivee(villeArrive);
-            
 
-            System.out.println("vole avion :" + vol.getAvion());
-            System.out.println("vole dtDebut :" + vol.getDtDebut());
-            System.out.println("vole dtFin:" + vol.getDtFin());
-            System.out.println("vole villeDepart :" + vol.getVilleArrivee());
-            System.out.println("vole villeArrivee :" + vol.getVilleDepart());
-            
-
-            // // Connection conn = Dbconn.getConnection();
+            paramvol.setCancel_heure_reserv(resacanheurelimit);
+            paramvol.setNb_heure_avant(resaheurelimit);
+            paramvol.setPromotion(promotion);
+           
              System.out.println(vol.getDtDebut()+"ity aho");
             Connection connection=Dbconn.getConnection();
             List<Object> Lvilles = new Ville().selectAll(connection);
@@ -81,7 +78,10 @@ public class VolController {
             view.add("Lavions",Lavions);
             view.add("Lvilles",Lvilles);
             view.add("Lvols",Lvols);
-            vol.inserer(connection);
+            Vol vol2=(Vol)vol.inserer(connection);
+            System.out.println("id vol inserere"+ vol2.getId());
+            paramvol.setIdvol(vol2.getId());
+            paramvol.inserer(connection);
             connection.close();
             return view;
         }
