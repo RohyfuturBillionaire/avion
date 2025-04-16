@@ -42,8 +42,10 @@
 <body>
     <div class="sidebar">
         <h1 class="text-center">air jordan</h1>   
-        <a href="list">liste des vole</a>
-        <a href="insertionVol">insertion vole</a>
+        <a href="list">liste des vol</a>
+        <a href="insertionVol">insertion vol</a>
+        <a href="listReservation">mes reservations</a>
+
     </div>
     <% if (request.getAttribute("message") != null) { %>
     <script>
