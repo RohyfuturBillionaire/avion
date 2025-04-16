@@ -87,7 +87,18 @@
                 <td><%= ((Vol)vol).getDtFin() %></td>
                 <td><%= ((Vol)vol).getVilleDepart().getNomVille() %></td>
                 <td><%= ((Vol)vol).getVilleArrivee().getNomVille() %></td>
-                <td><a href="#">reserver</a></td>
+                <td>
+                    
+                    <form action="reserver" method="POST" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="hidden" class="form-control" name="id" value="<%= ((Vol)vol).getId() %>">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">reserver</button>
+                    </form>
+                    
+                </td>
                 <td>
                     <form action="updateVol" method="POST" class="form-inline" role="form">
                         <div class="form-group">

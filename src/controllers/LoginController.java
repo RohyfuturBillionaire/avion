@@ -29,6 +29,7 @@ public class LoginController {
             model.setUrl("list");
             User user = new User();
             user.setRole("user");
+            user.addInfo("id",((Utilisateur)users.get(0)).getId());
             user.setUsername(nomUtilisateur);
             session.set("user", user);
         }
