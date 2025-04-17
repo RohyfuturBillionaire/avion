@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.DB;
 import connect.Dbconn;
 import model.Utilisateur;
 import outils.Controller;
@@ -23,7 +24,7 @@ public class LoginController {
     public ModelView accueil(String nomUtilisateur,String pwdUtilisateur,MySession session) throws Exception {
         Connection connection= Dbconn.getConnection();
         ModelView model= new ModelView();
-        List<Object> users=(new Utilisateur()).rechercheMultiCritaire(connection,nomUtilisateur,pwdUtilisateur);
+        List<DB> users=(new Utilisateur()).rechercheMultiCritaire(connection,nomUtilisateur,pwdUtilisateur);
         System.out.println("user size "+users.size());
         if (users.size()>0) {
             model.setUrl("list");

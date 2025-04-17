@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import DAO.DB;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URI;
@@ -16,6 +18,7 @@ import model.Reservation;
 import model.Utilisateur;
 import model.Vol;
 import outils.Controller;
+import outils.DButils;
 import outils.ErrorUrl;
 import outils.ModelView;
 import outils.MySession;
@@ -45,8 +48,17 @@ public class ReservationController {
     @Url(path = "/listReservation")
     public ModelView listReservation(MySession session) throws Exception{
         User user=(User)session.get("user");
+    
         Connection connection=Dbconn.getConnection();
-        List<Object> reservation = new Reservation().rechercheMultiCritaire(connection,"",""+(int)user.getInfo("id"),"");
+        List<DB> reservation = new Reservation().rechercheMultiCritaire(connection,"",""+(int)user.getInfo("id"),"");
+        DB [] res=reservation.toArray(new DB[0]);
+        String filename="C:\\Users\\rohyr\\Documents\\agep\\agep\\src\\main\\resources\\static\\pdf_exported\\reservationFarany.csv";
+        String [] entete= new String[4];
+        entete[0]="id";
+        entete[1]="dateReservation";
+        entete[2]="iduser";
+        entete[3]="idvol";
+        new DButils().ToCSV(res, filename,",", entete);
         ModelView view= new ModelView();
         view.setUrl("listReservation.jsp");
         view.add("reservations", reservation);

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.sound.midi.MidiEvent;
 
+import DAO.DB;
 import connect.Dbconn;
 import model.Avion;
 import model.ParamVol;
@@ -27,9 +28,9 @@ public class VolController {
     public ModelView insertion() throws Exception { 
         Connection conn = Dbconn.getConnection();
         ModelView mv = new ModelView();
-        List<Object> Lvilles = new Ville().selectAll(conn);
-        List<Object> Lavions = new Avion().selectAll(conn);
-        List<Object> Lvols = new Vol().selectAll(conn);
+        List<DB> Lvilles = new Ville().selectAll(conn);
+        List<DB> Lavions = new Avion().selectAll(conn);
+        List<DB> Lvols = new Vol().selectAll(conn);
         mv.setUrl("insertionVole.jsp");
         mv.add("Lavions",Lavions);
         mv.add("Lvilles",Lvilles);
@@ -73,9 +74,9 @@ public class VolController {
            
              System.out.println(vol.getDtDebut()+"ity aho");
             Connection connection=Dbconn.getConnection();
-            List<Object> Lvilles = new Ville().selectAll(connection);
-            List<Object> Lavions = new Avion().selectAll(connection);
-            List<Object> Lvols = new Vol().selectAll(connection);
+            List<DB> Lvilles = new Ville().selectAll(connection);
+            List<DB> Lavions = new Avion().selectAll(connection);
+            List<DB> Lvols = new Vol().selectAll(connection);
             view.setUrl("insertionVole.jsp");
             view.add("Lavions",Lavions);
             view.add("Lvilles",Lvilles);
@@ -129,9 +130,9 @@ public class VolController {
             vol.setVilleDepart(idVilleArrivee);
             vol.setVilleArrivee(idVilleDepart);
             Connection connection=Dbconn.getConnection();
-            List<Object> Lvilles = new Ville().selectAll(connection);
-            List<Object> Lavions = new Avion().selectAll(connection);
-            List<Object> Lvols = new Vol().selectAll(connection);
+            List<DB> Lvilles = new Ville().selectAll(connection);
+            List<DB> Lavions = new Avion().selectAll(connection);
+            List<DB> Lvols = new Vol().selectAll(connection);
             view.setUrl("updateVol.jsp");
             view.add("Lavions",Lavions);
             view.add("Lvilles",Lvilles);

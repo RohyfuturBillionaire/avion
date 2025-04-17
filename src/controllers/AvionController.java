@@ -25,9 +25,9 @@ public class AvionController {
     @Url(path ="/list")
     public ModelView accueil() throws Exception {
         Connection conn = Dbconn.getConnection();
-        List<Object> Lvilles = new Ville().selectAll(conn);
-        List<Object> Lavions = new Avion().selectAll(conn);
-        List<Object> Lvols = new Vol().selectAll(conn);
+        List<DB> Lvilles = new Ville().selectAll(conn);
+        List<DB> Lavions = new Avion().selectAll(conn);
+        List<DB> Lvols = new Vol().selectAll(conn);
         ModelView mv = new ModelView();
         mv.setUrl("accueil.jsp");
         mv.add("Lavions",Lavions);
@@ -45,10 +45,10 @@ public class AvionController {
            
             Connection conn = Dbconn.getConnection();
             System.out.println("ville depart= "+villeDepart);
-            List<Object> vols= vol.rechercheMultiCritaire(conn,dateDepart,dateArrive,""+villeDepart,""+villeArrive,""+avion);
+            List<DB> vols= vol.rechercheMultiCritaire(conn,dateDepart,dateArrive,""+villeDepart,""+villeArrive,""+avion);
 
-                List<Object> Lvilles = new Ville().selectAll(conn);
-                List<Object> Lavions = new Avion().selectAll(conn);
+                List<DB> Lvilles = new Ville().selectAll(conn);
+                List<DB> Lavions = new Avion().selectAll(conn);
                 // List<Object> Lvols = new Vol().selectAll(conn);
                 ModelView mv = new ModelView();
                 mv.setUrl("accueil.jsp");
