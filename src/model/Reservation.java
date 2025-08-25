@@ -24,6 +24,28 @@ public class Reservation extends DB {
     @BaseObject(idBaseName = "id_vol")
     Vol vol;
 
+    @Column(name = "paiement")
+    boolean paiment;
+
+    
+    @Column(name = "classe")
+    String classe;
+
+    public void setClasse(String cl){
+        this.classe=cl;
+    }
+    public String getClasse(){return classe;}
+
+    
+
+    public boolean getPaiment(){
+        return paiment;
+    }
+
+    public void setPaiment(boolean paiment){
+        this.paiment=paiment;
+    }
+
     public int getId() {
         return id;
     }

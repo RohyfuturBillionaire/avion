@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.Date;
+
 import DAO.DB;
 import annotations.Column;
 import annotations.PrimaryKey;
@@ -23,6 +25,37 @@ public class ParamVol extends DB {
 
     @Column(name = "idvol")
     private int idvol;
+    
+    @Column(name = "date_butoire_paiement")
+    private Date dateButoirePaiement;
+
+    @Column(name = "nbr_billet")
+    int nbrBillet;
+
+    @Column(name = "classe")
+    String classe;
+
+    public void setClasse(String cl){
+        this.classe=cl;
+    }
+    public String getClasse(){return classe;}
+    
+    public void setNbrBillet(int nbrBillet){
+        this.nbrBillet=nbrBillet;
+    }
+
+    public int getNbrBillet(){
+        return nbrBillet;
+    }
+
+    public Date getDateButoirePaiment(){
+        return dateButoirePaiement;
+    }
+
+
+    public void setDateButoirePaiment(Date date){
+        this.dateButoirePaiement=date;
+    }
 
     public void setCancel_heure_reserv(double cancel_heure_reserv) {
         this.cancel_heure_reserv = cancel_heure_reserv;

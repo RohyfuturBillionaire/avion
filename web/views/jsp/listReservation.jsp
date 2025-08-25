@@ -32,10 +32,24 @@
                                     <input type="hidden" class="form-control" name="id" value="<%= ((Reservation)reservation).getId() %>">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">reserver</button>
+                            <button type="submit" class="btn btn-success">exporter</button>
                     </form>
                 </td>
-                <td> <button type="submit" class="btn btn-danger">cancel</button></td>
+                
+                <td> 
+                
+                   <form action="deleteReservation" method="POST" class="form-inline" role="form">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="idRes" name="idRes" placeholder="Input field" value="<%= ((Reservation)reservation).getId() %>">
+                    </div>
+                    
+                   <button type="submit" class="btn btn-danger">cancel</button>
+                    
+                  </form>
+
+                
+                
+                </td>
             </tr>
         <% } %> 
       <!-- Add more rows as needed -->

@@ -28,6 +28,20 @@ import outils.User;
 
 @Controller
 public class ReservationController {
+
+    @Post
+    @Url(path = "/deleteReservation")
+    @ErrorUrl(url = "/listReservation")
+    public ModelView delete(int idRes) throws Exception
+        {
+            Connection conn= Dbconn.getConnection();
+            Reservation vol= (Reservation)new Reservation().getById(conn, idRes);
+            vol.deleteById(conn, idRes);
+            ModelView view= new ModelView();
+            view.setUrl("listReservation");
+            return view;
+        }
+
     @Post
     @Url(path = "/reserver")
     @ErrorUrl(url = "/list")
